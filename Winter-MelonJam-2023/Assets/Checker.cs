@@ -8,7 +8,10 @@ using UnityEngine;
 public abstract class Checker : MonoBehaviour
 {
 
+    [SerializeField] private bool staysActivated = false;
     [SerializeField] private float[] canActivatedBy;
+
+    private bool activ = false;
 
 
     public delegate void activated();
@@ -43,10 +46,14 @@ public abstract class Checker : MonoBehaviour
     {
         CanActivate canActivate = other.GetComponent<CanActivate>();
 
-        if(canActivate != null && canActivatedBy.Contains(canActivate.Type))
+        if(canActivate != null && canActivatedBy.Contains(canActivate.Type) )
         {
             activateFromCount++;
-            onActivated?.Invoke();
+            if (!activ)
+            {
+                onActivated?.Invoke();
+                activ = true;
+            }
 
 
         }
@@ -59,9 +66,10 @@ public abstract class Checker : MonoBehaviour
         if (canActivate != null && canActivatedBy.Contains(canActivate.Type))
         {
             activateFromCount--;
-            if (activateFromCount <= 0)
+            if (activateFromCount <= 0 && !staysActivated)
             {
                 onDeactivated?.Invoke();
+                activ = false;
                 activateFromCount = 0;
             }
 
