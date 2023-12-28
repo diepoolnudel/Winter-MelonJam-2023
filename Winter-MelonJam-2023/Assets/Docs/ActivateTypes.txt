@@ -1,0 +1,6 @@
+-1 = default
+0 = player
+1 = podestel objects
+2 = box little
+3 = box normal
+4 = box big
