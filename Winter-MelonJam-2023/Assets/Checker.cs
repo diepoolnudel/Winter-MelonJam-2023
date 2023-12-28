@@ -11,7 +11,7 @@ public abstract class Checker : MonoBehaviour
     [SerializeField] private bool staysActivated = false;
     [SerializeField] private float[] canActivatedBy;
 
-    private bool activ = false;
+    protected bool activ = false;
 
 
     public delegate void activated();
@@ -42,7 +42,7 @@ public abstract class Checker : MonoBehaviour
         
     }
 
-    private void TriggerEnterd(Collider other)
+    protected virtual void TriggerEnterd(Collider other)
     {
         CanActivate canActivate = other.GetComponent<CanActivate>();
 
@@ -75,6 +75,13 @@ public abstract class Checker : MonoBehaviour
 
         }
 
+    }
+
+    public void ResetChecker()
+    {
+        activ = false;
+        activateFromCount = 0;
+        onDeactivated?.Invoke();
     }
 
 
