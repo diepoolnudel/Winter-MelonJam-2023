@@ -1,0 +1,11 @@
+
+									in Meters
+jump heigh						= 1
+jummp heigh with jump charme	= 3
+jump width walk					= possible 3 use 2
+jump width run					= possible 5 use 4,3
+jump width run with jump charme	= possible 8 use 6
+
+jump width/height walk			=  2/1
+jump width/heightrun with jump charme		= possible 4/1 use 3/1
+jump width/height run with jump charme		=  use 6/1  , 4/2
