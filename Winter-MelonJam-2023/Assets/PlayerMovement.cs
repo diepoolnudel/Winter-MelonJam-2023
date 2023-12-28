@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float walkSpeed = 2.0f;
     [SerializeField] private float runSpeed = 5.0f;
     [SerializeField] private float jumpHeight = 1.0f;
+    [SerializeField] private float heightJumpHeigh = 2.0f;
     [SerializeField] private float gravity = -9.81f;
     [Header("Looking")]
     [SerializeField] private Transform vc_player;
@@ -35,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PlayerManager.CanMove)
+            return;
+
 
         groundedPlayer = controller.isGrounded;
         run = Input.GetButton("Run");
@@ -55,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(Input.GetButtonDown("Jump") &&  groundedPlayer) 
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
+            velocity.y = Mathf.Sqrt(-3.0f * gravity * (PlayerManager.HeighJump ? heightJumpHeigh : jumpHeight) );
         }
 
         velocity.y += gravity * Time.deltaTime;

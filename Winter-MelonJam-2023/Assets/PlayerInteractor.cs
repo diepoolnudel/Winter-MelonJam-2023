@@ -34,15 +34,24 @@ public class PlayerInteractor : MonoBehaviour
 
             if (Physics.Raycast(vc_player.position, vc_player.forward, out hit, range, layerMask))
             {
-               
-
                 if(mouseButtonDown)//Interaction
                 {
 
-                    if(hit.transform.CompareTag("grabbable"))
+
+
+                    if(hit.transform.CompareTag("grabbable") && PlayerManager.CanCrab)
                     {
                         GrabObject(hit.transform.gameObject);
                     }
+                    else if (hit.transform.CompareTag("charm"))
+                    {
+                        hit.transform.GetComponent<Charm>().Collect();
+
+
+                    }
+
+
+
                 }
 
             }
@@ -56,7 +65,6 @@ public class PlayerInteractor : MonoBehaviour
             {
                 DropObject();
             }
-
 
         }
 
@@ -74,7 +82,6 @@ public class PlayerInteractor : MonoBehaviour
         heldObjRB.drag = 10;
         heldObjRB.constraints = RigidbodyConstraints.FreezeRotation;
 
-        Debug.Log("Object grabed");
     }
 
     private void DropObject()
@@ -85,7 +92,6 @@ public class PlayerInteractor : MonoBehaviour
         heldObjRB.constraints = RigidbodyConstraints.None;
 
         heldObj = null;
-        Debug.Log("Object droped");
     }
 
 
