@@ -7,6 +7,16 @@ public class Door : MonoBehaviour
 
     [SerializeField] private float offset;
     [SerializeField] private Transform door;
+    [SerializeField] private bool openOnStart = false;
+
+
+
+    private void Start()
+    {
+        if (openOnStart)
+            Open();
+    }
+
 
     private bool open = false;
     public void Open()
