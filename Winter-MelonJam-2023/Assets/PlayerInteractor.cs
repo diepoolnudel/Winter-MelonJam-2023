@@ -7,6 +7,7 @@ public class PlayerInteractor : MonoBehaviour
 
     [SerializeField] private float range = 2.0f;
     [SerializeField] private Transform vc_player;
+    [SerializeField] private Ui ui;
 
     [Header("Grabbing")]
     [SerializeField] private Transform holdpos;
@@ -34,12 +35,9 @@ public class PlayerInteractor : MonoBehaviour
 
             if (Physics.Raycast(vc_player.position, vc_player.forward, out hit, range, layerMask))
             {
-                if(mouseButtonDown)//Interaction
+                if (mouseButtonDown)//Interaction
                 {
-
-
-
-                    if(hit.transform.CompareTag("grabbable") && PlayerManager.CanCrab)
+                    if (hit.transform.CompareTag("grabbable") && PlayerManager.CanCrab)
                     {
                         GrabObject(hit.transform.gameObject);
                     }
@@ -49,17 +47,38 @@ public class PlayerInteractor : MonoBehaviour
 
 
                     }
+                }
+                else
+                {
+                    if (hit.transform.CompareTag("grabbable"))
+                    {
 
+                        if (PlayerManager.CanCrab)
+                            ui.ShowInfoText("left click to pick up");
+                        else
+                            ui.ShowInfoText("too heavy to pick up");
 
+                    }
+                    else if (hit.transform.CompareTag("charm"))
+                    {
+                        ui.ShowInfoText("left click to collect");
+                    }
+                    else
+                    {
+                        ui.HideInfoText();
+                    }
 
                 }
 
             }
+            else
+                ui.HideInfoText();
 
         }
         else
         {
             MoveObject();
+            ui.HideInfoText();
 
             if (!mouseButtonDown)
             {
