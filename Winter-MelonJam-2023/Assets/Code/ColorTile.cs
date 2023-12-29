@@ -8,15 +8,20 @@ public class ColorTile : Checker
     [SerializeField] private Transform indicator;
     public bool canColored = true;
 
+    [SerializeField,ColorUsage(true,true)] private Color blue;
+    [SerializeField, ColorUsage(true, true)] private Color red;
 
     protected override void OnActivated()
     {
-        indicator.GetComponent<Renderer>().material.color = Color.red;
+        //indicator.GetComponent<Renderer>().material.color = red;
+        indicator.GetComponent<Renderer>().material.SetColor("_EmissionColor", red);
     }
 
     protected override void OnDeactivated()// when reset
     {
-        indicator.GetComponent<Renderer>().material.color = Color.blue;
+        //indicator.GetComponent<Renderer>().material.color = blue;
+        indicator.GetComponent<Renderer>().material.SetColor("_EmissionColor", blue);
+
         canColored = true;
     }
 
