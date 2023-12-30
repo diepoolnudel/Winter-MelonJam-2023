@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;
     [Header("Looking")]
     [SerializeField] private Transform vc_player;
-    [SerializeField] private float lookSpeed = 2.0f;
+    [SerializeField] public static float lookSpeed = 1.5f;
     [SerializeField] private float lookXLimit = 80.0f;
     [Header("Sound")]
     [SerializeField] private float walkCooldown = 0.8f;
@@ -92,11 +92,11 @@ public class PlayerMovement : MonoBehaviour
 
         //Rotation
 
-        rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+        rotationX += -Input.GetAxis("Mouse Y") * lookSpeed/10;
         rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
         vc_player.localRotation = Quaternion.Euler(rotationX, 0f, 0f);
 
-        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed/10, 0);
 
 
     }

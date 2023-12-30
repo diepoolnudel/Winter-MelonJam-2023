@@ -10,9 +10,14 @@ public class Ui : MonoBehaviour
     [SerializeField] private GameObject pnl_grabCharm;
     [SerializeField] private GameObject pnl_jumpCharm;
     [SerializeField] private GameObject pnl_loveCharm;
+    [SerializeField] private GameObject pnl_MainMenu;
+    [SerializeField] private GameObject pnl_options;
+    [SerializeField] private GameObject crossHair;
     [SerializeField] private TMP_Text txt_info;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject vc_mainMenu;
 
-
+    private bool somethingOpen = false;
 
 
 
@@ -20,21 +25,35 @@ public class Ui : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            CloseMenues();
+            if(!somethingOpen)
+                OpenOptions();
         }
     }
+
+
+    public void BtnStart_onClick()
+    {
+        player.SetActive(true);
+        vc_mainMenu.SetActive(false);
+        CloseMenues();
+
+    }
+
 
 
     public void OpenGrabCharmCollected()
     {
         PlayerManager.CanMove = false;
+        somethingOpen = true;
         pnl_grabCharm.SetActive(true);
-
+        crossHair.SetActive(false);
     }
 
     public void OpenJumpCharmCollected()
     {
         PlayerManager.CanMove = false;
+        somethingOpen = true;
+        crossHair.SetActive(false);
         pnl_jumpCharm.SetActive(true);
 
     }
@@ -43,18 +62,36 @@ public class Ui : MonoBehaviour
     public void OpenLoveCharmCollected()
     {
         PlayerManager.CanMove = false;
+        somethingOpen = true;
         pnl_loveCharm.SetActive(true);
+        crossHair.SetActive(false);
 
+    }
+
+    public void OpenOptions()
+    {
+        somethingOpen = true;
+        PlayerManager.CanMove = false;
+        pnl_options.SetActive(true);
+        crossHair.SetActive(false);
     }
 
 
     public void CloseMenues()
     {
-        PlayerManager.CanMove = true;
+        if (player.activeSelf)// check if game starts
+        {
+            PlayerManager.CanMove = true;
+            crossHair.SetActive(true);
+            pnl_MainMenu.SetActive(false);
+        }
 
         pnl_grabCharm.SetActive(false);
         pnl_jumpCharm.SetActive(false);
         pnl_loveCharm.SetActive(false);
+        pnl_options.SetActive(false);
+
+        somethingOpen = false;
 
     }
 
