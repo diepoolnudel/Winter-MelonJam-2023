@@ -12,6 +12,9 @@ public class ColorTileChecker : MonoBehaviour
     private bool allActivated = false;
     private float currentActivated = 0;
 
+    [SerializeField] private AudioSource as_ColorTileActivated;
+    [SerializeField] private AudioSource as_ColorTileFailed;
+
     void Start()
     {
 
@@ -29,6 +32,7 @@ public class ColorTileChecker : MonoBehaviour
                 }
                 else
                 {
+                    as_ColorTileActivated.Play();
                     checkerTrue[ii] = true;
                     currentActivated++;
                 }
@@ -50,6 +54,7 @@ public class ColorTileChecker : MonoBehaviour
         if (allActivated)
             return;
 
+        as_ColorTileFailed.Play();
         foreach (var checker in checkers)
         {
             checker.canColored = false;

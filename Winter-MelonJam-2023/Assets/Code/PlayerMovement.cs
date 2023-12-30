@@ -19,7 +19,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float walkCooldown = 0.8f;
     [SerializeField] private float runCooldown = 0.4f;
     [SerializeField] private AudioSource as_steps;
+    [SerializeField] private AudioSource as_jump;
     [SerializeField] private AudioClip[] stepSounds;
+    [SerializeField] private AudioClip jump;
+    [SerializeField] private AudioClip jumpwithCharme;
     private float timer;
 
     private CharacterController controller;
@@ -66,13 +69,19 @@ public class PlayerMovement : MonoBehaviour
         if (move.sqrMagnitude >= 0.05 && groundedPlayer)
         {
             PlaySteps();
+            
         }
 
+
+        //Movemetn
         controller.Move(move.normalized * Time.deltaTime * ( run ? runSpeed : walkSpeed ));
 
+        // Jump
         if(Input.GetButtonDown("Jump") &&  groundedPlayer) 
         {
             velocity.y = Mathf.Sqrt(-3.0f * gravity * (PlayerManager.HeighJump ? heightJumpHeigh : jumpHeight) );
+            as_jump.PlayOneShot((PlayerManager.HeighJump ? jumpwithCharme : jump));
+
         }
 
         velocity.y += gravity * Time.deltaTime;

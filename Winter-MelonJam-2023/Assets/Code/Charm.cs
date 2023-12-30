@@ -12,6 +12,8 @@ public abstract class Charm : MonoBehaviour
     [SerializeField] private float amplitude = 1.0f;
     [SerializeField] private float frquency = 1.0f;
 
+    [SerializeField] private AudioSource as_collect;
+
     Vector3 originalPos;
 
     private void Start()
@@ -36,6 +38,7 @@ public abstract class Charm : MonoBehaviour
     public virtual void Collect()
     {
         onCollect?.Invoke();
+        as_collect.Play();
         Destroy(this.gameObject);
     }
     

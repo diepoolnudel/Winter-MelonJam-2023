@@ -129,6 +129,7 @@ MonoBehaviour:
   rotationSpeed: 15
   amplitude: 0.3
   frquency: 1.5
+  as_collect: {fileID: 0}
 --- !u!1001 &154264040651911038
 PrefabInstance:
   m_ObjectHideFlags: 0

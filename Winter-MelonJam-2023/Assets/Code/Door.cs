@@ -9,6 +9,9 @@ public class Door : MonoBehaviour
     [SerializeField] private Transform door;
     [SerializeField] private bool openOnStart = false;
 
+    [Header("Sound")]
+    [SerializeField] private AudioSource as_doorOpen;
+    [SerializeField] private AudioSource as_doorClose;
 
 
     private void Start()
@@ -24,6 +27,8 @@ public class Door : MonoBehaviour
         if (open)
             return;
 
+        as_doorClose.Stop();
+        as_doorOpen.Play();
         door.position = door.position + Vector3.up * offset;
         open = true;
     }
@@ -33,6 +38,9 @@ public class Door : MonoBehaviour
         if(!open)
             return;
 
+
+        as_doorClose.Play();
+        as_doorOpen.Stop();
         door.position = door.position - Vector3.up * offset;
 
         open = false;

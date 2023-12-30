@@ -11,10 +11,12 @@ public class ColorTile : Checker
     [SerializeField,ColorUsage(true,true)] private Color blue;
     [SerializeField, ColorUsage(true, true)] private Color red;
 
+
     protected override void OnActivated()
     {
         //indicator.GetComponent<Renderer>().material.color = red;
         indicator.GetComponent<Renderer>().material.SetColor("_EmissionColor", red);
+
     }
 
     protected override void OnDeactivated()// when reset
