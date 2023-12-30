@@ -15,6 +15,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform vc_player;
     [SerializeField] private float lookSpeed = 2.0f;
     [SerializeField] private float lookXLimit = 80.0f;
+    [Header("Sound")]
+    [SerializeField] private float walkCooldown = 0.8f;
+    [SerializeField] private float runCooldown = 0.4f;
+    [SerializeField] private AudioSource as_steps;
+    [SerializeField] private AudioClip[] stepSounds;
+    private float timer;
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -55,6 +61,13 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = Input.GetAxis("Horizontal")* right +  Input.GetAxis("Vertical")*forward;
         move.y = 0;
 
+        //sound
+        timer += Time.deltaTime;
+        if (move.sqrMagnitude >= 0.05 && groundedPlayer)
+        {
+            PlaySteps();
+        }
+
         controller.Move(move.normalized * Time.deltaTime * ( run ? runSpeed : walkSpeed ));
 
         if(Input.GetButtonDown("Jump") &&  groundedPlayer) 
@@ -76,6 +89,26 @@ public class PlayerMovement : MonoBehaviour
 
         transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
 
+
+    }
+
+
+
+
+
+    private void PlaySteps()
+    {
+
+       
+
+        if (timer >= (run ? runCooldown : walkCooldown))
+        {
+            int i = Random.Range(0, stepSounds.Length);
+            Debug.Log(i);
+            timer = 0;
+            as_steps.PlayOneShot(stepSounds[i]);
+
+        }
 
     }
 }
